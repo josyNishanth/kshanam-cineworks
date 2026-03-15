@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useBookNow } from '@/context/BookNowContext'
 
 function scrollTo(id) {
   document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' })
@@ -9,9 +10,10 @@ function scrollTo(id) {
 export default function Nav() {
   const [scrolled,  setScrolled]  = useState(false)
   const [menuOpen,  setMenuOpen]  = useState(false)
-  const navigate  = useNavigate()
-  const location  = useLocation()
-  const path      = location.pathname   // '/' | '/work' | '/about'
+  const navigate      = useNavigate()
+  const location      = useLocation()
+  const path          = location.pathname
+  const { setOpen }   = useBookNow()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -64,11 +66,11 @@ export default function Nav() {
             </li>
             <li>
               <button
-                onClick={() => handleScrollLink('#services')}
+                onClick={() => { navigate('/services'); setMenuOpen(false) }}
                 className="text-sm font-sans transition-colors duration-200"
-                style={{ color: '#777770' }}
+                style={{ color: activeColor('/services') }}
                 onMouseEnter={e => (e.target.style.color = '#1A1A18')}
-                onMouseLeave={e => (e.target.style.color = '#777770')}
+                onMouseLeave={e => (e.target.style.color = activeColor('/services'))}
               >
                 Services
               </button>
@@ -96,16 +98,16 @@ export default function Nav() {
               About
             </button>
             <button
-              onClick={() => handleScrollLink('#contact')}
+              onClick={() => { navigate('/contact'); setMenuOpen(false) }}
               className="text-sm font-sans transition-colors duration-200"
-              style={{ color: '#777770' }}
+              style={{ color: activeColor('/contact') }}
               onMouseEnter={e => (e.target.style.color = '#1A1A18')}
-              onMouseLeave={e => (e.target.style.color = '#777770')}
+              onMouseLeave={e => (e.target.style.color = activeColor('/contact'))}
             >
               Contact
             </button>
             <motion.button
-              onClick={() => handleScrollLink('#contact')}
+              onClick={() => { setOpen(true); setMenuOpen(false) }}
               whileHover={{ opacity: 0.85, y: -1 }}
               whileTap={{ scale: 0.97 }}
               className="text-sm font-medium font-sans text-white rounded-full px-5 py-2"
@@ -146,9 +148,9 @@ export default function Nav() {
           >
             {[
               { label: 'Work',     action: () => { navigate('/work');  setMenuOpen(false) } },
-              { label: 'Services', action: () => handleScrollLink('#services') },
+              { label: 'Services', action: () => { navigate('/services'); setMenuOpen(false) } },
               { label: 'About',    action: () => { navigate('/about'); setMenuOpen(false) } },
-              { label: 'Contact',  action: () => handleScrollLink('#contact') },
+              { label: 'Contact',  action: () => { navigate('/contact'); setMenuOpen(false) } },
             ].map(({ label, action }, i) => (
               <motion.button
                 key={label}
@@ -164,7 +166,7 @@ export default function Nav() {
             ))}
 
             <motion.button
-              onClick={() => handleScrollLink('#contact')}
+              onClick={() => { setOpen(true); setMenuOpen(false) }}
               className="mt-4 text-white font-sans font-medium px-8 py-3 rounded-full"
               style={{ background: '#1A1A18' }}
               initial={{ opacity: 0 }}

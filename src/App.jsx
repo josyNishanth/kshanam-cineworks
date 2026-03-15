@@ -1,4 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
+import BookNowPopover       from './components/BookNowPopover'
 import Nav                  from './components/Nav'
 import Hero                 from './components/Hero'
 import ZoomParallaxSection  from './components/ZoomParallaxSection'
@@ -9,8 +11,11 @@ import CTABanner            from './components/CTABanner'
 import Contact              from './components/Contact'
 import Footer               from './components/Footer'
 import WhatsAppBtn          from './components/WhatsAppBtn'
-import WorkPage             from './pages/WorkPage'
-import AboutPage            from './pages/AboutPage'
+
+const WorkPage      = lazy(() => import('./pages/WorkPage'))
+const AboutPage     = lazy(() => import('./pages/AboutPage'))
+const ServicesPage  = lazy(() => import('./pages/ServicesPage'))
+const ContactPage   = lazy(() => import('./pages/ContactPage'))
 
 function HomePage() {
   return (
@@ -33,10 +38,17 @@ function HomePage() {
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/"     element={<HomePage />} />
-      <Route path="/work"  element={<WorkPage />} />
-      <Route path="/about" element={<AboutPage />} />
-    </Routes>
+    <>
+      <BookNowPopover />
+      <Suspense fallback={null}>
+        <Routes>
+          <Route path="/"         element={<HomePage />} />
+          <Route path="/work"     element={<WorkPage />} />
+          <Route path="/about"    element={<AboutPage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/contact"  element={<ContactPage />} />
+        </Routes>
+      </Suspense>
+    </>
   )
 }

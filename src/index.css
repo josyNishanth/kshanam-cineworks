@@ -35,6 +35,15 @@
   --max-w:     1020px;
   --serif:     'Playfair Display', Georgia, serif;
   --sans:      'Inter', system-ui, sans-serif;
+
+  /* shadcn-compatible tokens mapped to site palette */
+  --background:       40 30% 91%;
+  --muted:            40 15% 85%;
+  --muted-foreground: 0 0% 47%;
+  --accent:           0 1% 10%;
+  --accent-foreground:40 30% 91%;
+  --ring:             0 1% 10%;
+  --input:            0 0% 80%;
 }
 
 html { scroll-behavior: smooth; }
