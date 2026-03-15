@@ -1,26 +1,41 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-
-const NAV_LINKS = [
-  { label: 'Work',     href: '#portfolio' },
-  { label: 'Services', href: '#services'  },
-  { label: 'About',    href: '#testimonials' },
-  { label: 'Contact',  href: '#contact'   },
-]
+import { useNavigate, useLocation } from 'react-router-dom'
 
 function scrollTo(id) {
   document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' })
 }
 
 export default function Nav() {
-  const [scrolled,    setScrolled]    = useState(false)
-  const [menuOpen,    setMenuOpen]    = useState(false)
+  const [scrolled,  setScrolled]  = useState(false)
+  const [menuOpen,  setMenuOpen]  = useState(false)
+  const navigate  = useNavigate()
+  const location  = useLocation()
+  const path      = location.pathname   // '/' | '/work' | '/about'
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // For links that should scroll the home page
+  function handleScrollLink(href) {
+    if (path !== '/') {
+      navigate('/')
+      setTimeout(() => scrollTo(href), 120)
+    } else {
+      scrollTo(href)
+    }
+    setMenuOpen(false)
+  }
+
+  function handleLogoClick() {
+    if (path !== '/') navigate('/')
+    else scrollTo('#home')
+  }
+
+  const activeColor = (p) => path === p ? '#1A1A18' : '#777770'
 
   return (
     <>
@@ -33,48 +48,64 @@ export default function Nav() {
         }}
       >
         <div className="flex items-center justify-between max-w-6xl mx-auto">
-          {/* left links — desktop */}
+
+          {/* left — Work + Services */}
           <ul className="hidden md:flex items-center gap-7">
-            {NAV_LINKS.slice(0, 2).map(l => (
-              <li key={l.label}>
-                <button
-                  onClick={() => scrollTo(l.href)}
-                  className="text-sm font-sans transition-colors duration-200"
-                  style={{ color: '#777770' }}
-                  onMouseEnter={e => e.target.style.color = '#1A1A18'}
-                  onMouseLeave={e => e.target.style.color = '#777770'}
-                >
-                  {l.label}
-                </button>
-              </li>
-            ))}
+            <li>
+              <button
+                onClick={() => { navigate('/work'); setMenuOpen(false) }}
+                className="text-sm font-sans transition-colors duration-200"
+                style={{ color: activeColor('/work') }}
+                onMouseEnter={e => (e.target.style.color = '#1A1A18')}
+                onMouseLeave={e => (e.target.style.color = activeColor('/work'))}
+              >
+                Work
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => handleScrollLink('#services')}
+                className="text-sm font-sans transition-colors duration-200"
+                style={{ color: '#777770' }}
+                onMouseEnter={e => (e.target.style.color = '#1A1A18')}
+                onMouseLeave={e => (e.target.style.color = '#777770')}
+              >
+                Services
+              </button>
+            </li>
           </ul>
 
-          {/* logo — center */}
+          {/* logo */}
           <button
-            onClick={() => scrollTo('#home')}
+            onClick={handleLogoClick}
             className="font-serif font-bold tracking-tight select-none"
             style={{ fontSize: 18, color: '#1A1A18', letterSpacing: '-0.2px' }}
           >
             Kshanam Cineworks
           </button>
 
-          {/* right links + CTA — desktop */}
+          {/* right — About + Contact + Book Now */}
           <div className="hidden md:flex items-center gap-7">
-            {NAV_LINKS.slice(2).map(l => (
-              <button
-                key={l.label}
-                onClick={() => scrollTo(l.href)}
-                className="text-sm font-sans transition-colors duration-200"
-                style={{ color: '#777770' }}
-                onMouseEnter={e => e.target.style.color = '#1A1A18'}
-                onMouseLeave={e => e.target.style.color = '#777770'}
-              >
-                {l.label}
-              </button>
-            ))}
+            <button
+              onClick={() => { navigate('/about'); setMenuOpen(false) }}
+              className="text-sm font-sans transition-colors duration-200"
+              style={{ color: activeColor('/about') }}
+              onMouseEnter={e => (e.target.style.color = '#1A1A18')}
+              onMouseLeave={e => (e.target.style.color = activeColor('/about'))}
+            >
+              About
+            </button>
+            <button
+              onClick={() => handleScrollLink('#contact')}
+              className="text-sm font-sans transition-colors duration-200"
+              style={{ color: '#777770' }}
+              onMouseEnter={e => (e.target.style.color = '#1A1A18')}
+              onMouseLeave={e => (e.target.style.color = '#777770')}
+            >
+              Contact
+            </button>
             <motion.button
-              onClick={() => scrollTo('#contact')}
+              onClick={() => handleScrollLink('#contact')}
               whileHover={{ opacity: 0.85, y: -1 }}
               whileTap={{ scale: 0.97 }}
               className="text-sm font-medium font-sans text-white rounded-full px-5 py-2"
@@ -90,7 +121,7 @@ export default function Nav() {
             onClick={() => setMenuOpen(v => !v)}
             aria-label="Menu"
           >
-            {[0,1,2].map(i => (
+            {[0, 1, 2].map(i => (
               <motion.span
                 key={i}
                 className="block h-0.5 rounded-full"
@@ -113,21 +144,27 @@ export default function Nav() {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            {NAV_LINKS.map((l, i) => (
+            {[
+              { label: 'Work',     action: () => { navigate('/work');  setMenuOpen(false) } },
+              { label: 'Services', action: () => handleScrollLink('#services') },
+              { label: 'About',    action: () => { navigate('/about'); setMenuOpen(false) } },
+              { label: 'Contact',  action: () => handleScrollLink('#contact') },
+            ].map(({ label, action }, i) => (
               <motion.button
-                key={l.label}
-                onClick={() => { scrollTo(l.href); setMenuOpen(false) }}
+                key={label}
+                onClick={action}
                 className="font-serif italic text-3xl"
                 style={{ color: '#1A1A18' }}
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.07 }}
               >
-                {l.label}
+                {label}
               </motion.button>
             ))}
+
             <motion.button
-              onClick={() => { scrollTo('#contact'); setMenuOpen(false) }}
+              onClick={() => handleScrollLink('#contact')}
               className="mt-4 text-white font-sans font-medium px-8 py-3 rounded-full"
               style={{ background: '#1A1A18' }}
               initial={{ opacity: 0 }}

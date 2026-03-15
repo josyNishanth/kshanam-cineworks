@@ -111,30 +111,11 @@ function scrollTo(id) {
 export default function Hero() {
   return (
     <section
-      className="relative w-full overflow-hidden"
-      style={{ background: '#F4EFE7', height: '100vh' }}
+      className="relative w-full flex flex-col"
+      style={{ background: '#F4EFE7' }}
     >
-      {/* Circular Gallery — full bleed background */}
-      <div className="absolute inset-0 z-0">
-        <CircularGallery
-          items={cinematicItems}
-          radius={580}
-          autoRotateSpeed={0.025}
-          className="w-full h-full"
-        />
-      </div>
-
-      {/* Soft vignette overlay so text stays readable */}
-      <div
-        className="absolute inset-0 z-10 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(244,239,231,0.55) 0%, rgba(244,239,231,0.92) 75%, #F4EFE7 100%)',
-        }}
-      />
-
-      {/* Headline + CTA — centered over gallery */}
-      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center px-6 text-center">
+      {/* Headline + CTA — top section */}
+      <div className="relative z-10 flex flex-col items-center text-center px-6 pt-28 pb-12">
         <motion.span
           className="inline-block text-xs font-sans font-medium tracking-widest uppercase mb-5 px-4 py-1.5 rounded-full"
           style={{ color: '#888880', background: 'rgba(0,0,0,0.06)', letterSpacing: '2px' }}
@@ -218,26 +199,15 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Scroll hint */}
-      <motion.div
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 hidden md:flex flex-col items-center gap-1.5"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-      >
-        <span
-          className="text-xs font-sans tracking-widest uppercase"
-          style={{ color: '#aaa', letterSpacing: '2px' }}
-        >
-          scroll
-        </span>
-        <motion.div
-          className="w-px bg-gray-400"
-          style={{ height: 36 }}
-          animate={{ scaleY: [0.3, 1, 0.3], opacity: [0.4, 1, 0.4] }}
-          transition={{ duration: 1.8, repeat: Infinity }}
+      {/* Circular Gallery — below the title */}
+      <div className="relative z-0 w-full" style={{ height: '60vh' }}>
+        <CircularGallery
+          items={cinematicItems}
+          radius={580}
+          autoRotateSpeed={0.025}
+          className="w-full h-full"
         />
-      </motion.div>
+      </div>
     </section>
   )
 }
