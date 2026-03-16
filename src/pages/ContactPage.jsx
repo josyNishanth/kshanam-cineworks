@@ -41,7 +41,7 @@ const CONTACT_CARDS = [
     label: 'WhatsApp',
     value: '+91 99999 99999',
     hint: 'Fastest way to reach us',
-    href: 'https://wa.me/919999999999',
+    href: 'https://wa.me/9160071199',
   },
   {
     icon: (
@@ -82,7 +82,7 @@ export default function ContactPage() {
     const msg = encodeURIComponent(
       `Hi Kshanam Cineworks! 👋\n\nI'm *${form.name}*.\n\n${form.message}\n\nPhone: ${form.phone || 'Will share shortly'}`
     )
-    window.open(`https://wa.me/919999999999?text=${msg}`, '_blank')
+    window.open(`https://wa.me/9160071199?text=${msg}`, '_blank')
     setSent(true)
   }
 
@@ -135,7 +135,7 @@ export default function ContactPage() {
             Book Your Session →
           </motion.button>
           <motion.a
-            href="https://wa.me/919999999999"
+            href="https://wa.me/9160071199"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 font-sans font-medium rounded-full border"

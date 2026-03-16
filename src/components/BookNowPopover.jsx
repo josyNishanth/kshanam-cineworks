@@ -40,7 +40,7 @@ export default function BookNowPopover() {
     const msg = encodeURIComponent(
       `Hi Kshanam Cineworks! 👋\n\nI'm ${name || 'a potential client'} and I'm interested in *${service}*.\n\nMy phone: ${phone || 'Will share shortly'}\n\nLooking forward to hearing from you!`
     )
-    window.open(`https://wa.me/919999999999?text=${msg}`, '_blank')
+    window.open(`https://wa.me/9160071199?text=${msg}`, '_blank')
     handleClose()
   }
 

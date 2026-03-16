@@ -25,7 +25,7 @@ const COLS = [
     links: [
       { label: 'Instagram', href: '#' },
       { label: 'YouTube',   href: '#' },
-      { label: 'WhatsApp',  href: 'https://wa.me/919999999999' },
+      { label: 'WhatsApp',  href: 'https://wa.me/9160071199' },
     ],
   },
 ]
@@ -50,7 +50,7 @@ export default function Footer() {
             <div style={{ display: 'flex', gap: 10, marginTop: 20 }}>
               {['instagram', 'youtube', 'whatsapp'].map(s => (
                 <a
-                  key={s} href={s === 'whatsapp' ? 'https://wa.me/919999999999' : '#'}
+                  key={s} href={s === 'whatsapp' ? 'https://wa.me/9160071199' : '#'}
                   style={{
                     width: 36, height: 36, borderRadius: 10,
                     background: 'rgba(0,0,0,0.05)',

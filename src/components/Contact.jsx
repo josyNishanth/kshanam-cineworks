@@ -39,7 +39,7 @@ export default function Contact() {
     const text = encodeURIComponent(
       `Hi Kshanam Cineworks! 👋\n\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nService: ${form.service}\n\nMessage:\n${form.message}`
     )
-    window.open(`https://wa.me/919999999999?text=${text}`, '_blank')
+    window.open(`https://wa.me/9160071199?text=${text}`, '_blank')
     setSent(true)
   }
 
@@ -86,7 +86,7 @@ export default function Contact() {
         >
           {/* WhatsApp card */}
           <motion.a
-            href="https://wa.me/919999999999"
+            href="https://wa.me/9160071199"
             target="_blank" rel="noopener noreferrer"
             whileHover={{ y: -4, boxShadow: '0 20px 48px rgba(0,0,0,0.12)' }}
             style={{

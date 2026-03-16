@@ -68,7 +68,7 @@ export default function CTABanner() {
         </motion.button>
 
         <motion.a
-          href="https://wa.me/919999999999"
+          href="https://wa.me/9160071199"
           target="_blank" rel="noopener noreferrer"
           whileHover={{ opacity: 0.85, y: -2 }}
           style={{
