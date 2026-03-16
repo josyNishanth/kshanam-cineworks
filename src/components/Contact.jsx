@@ -107,7 +107,7 @@ export default function Contact() {
             </div>
             <div>
               <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 3 }}>WhatsApp Us</div>
-              <div style={{ fontSize: 12.5, color: '#888', fontWeight: 300 }}>+91 99999 99999 — add your number</div>
+              <div style={{ fontSize: 12.5, color: '#888', fontWeight: 300 }}>+91 9160071199</div>
               <div style={{ fontSize: 11, color: '#25D366', fontWeight: 500, marginTop: 3 }}>Usually replies within minutes</div>
             </div>
           </motion.a>
